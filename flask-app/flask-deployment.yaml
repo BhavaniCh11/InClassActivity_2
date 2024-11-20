@@ -1,0 +1,24 @@
+# flask-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app
+  namespace: flask-app
+spec:
+  replicas:
+  selector:
+    matchLabels:
+      app: flask
+  template:
+    metadata:
+      labels:
+        app: flask
+    spec:
+      containers:
+      - name: flask
+        image: flask-app:latest
+        ports:
+        - containerPort: 5000
+        envFrom:
+        - configMapRef:
+            name: flask-config
